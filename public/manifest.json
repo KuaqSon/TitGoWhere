@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "short_name": "React App",
+  "name": "Create React App Sample",
+  "version": "0.0.1",
+  "icons": {
+    "16": "favicon.ico",
+    "48": "favicon.ico",
+    "128": "favicon.ico"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": ["storage", "geolocation"]
+}
