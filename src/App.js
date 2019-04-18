@@ -149,7 +149,8 @@ class MiCasa extends Component {
 
   getBGStyle(category = 'HK') {
     return {
-      backgroundImage: `url(https://source.unsplash.com/2560x1600/daily?${category})`,
+      // backgroundImage: `url(https://source.unsplash.com/2560x1600/daily?${category})`,
+      backgroundImage: `url(./img/bg.jpg)`,
       backgroundSize: 'cover',
       height: '100vh'
     }
