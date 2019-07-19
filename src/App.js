@@ -1,18 +1,19 @@
-import React, {Component} from 'react';
-import {DateTime} from 'luxon';
-import Modal from 'react-modal';
-import './App.css';
+import React, { Component } from "react";
+import { DateTime } from "luxon";
+import Modal from "react-modal";
+import Quote from "./components/Quote";
+import "./App.css";
 
-const NAME_LS = 'NAME_LS';
+const NAME_LS = "NAME_LS";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)"
   }
 };
 
@@ -24,7 +25,7 @@ class MiCasa extends Component {
 
     this.state = {
       time,
-      name: '',
+      name: "",
       isNameRequired: false,
       salutation: this.determineSalutation(time.hour),
       quote: null,
@@ -34,10 +35,10 @@ class MiCasa extends Component {
       },
       location: null,
       temperature: null,
-      weatherAPIKey: '594d083c4f45203a1d8cf6c1f7dd0a0b',
+      weatherAPIKey: "594d083c4f45203a1d8cf6c1f7dd0a0b",
       weatherIcon: null,
       modalIsOpen: false,
-      inputValue: ''
+      inputValue: ""
     };
 
     this.closeModal = this.closeModal.bind(this);
@@ -45,13 +46,13 @@ class MiCasa extends Component {
   }
 
   closeModal() {
-    this.setState({modalIsOpen: false});
-    this.setState({name: this.state.inputValue});
+    this.setState({ modalIsOpen: false });
+    this.setState({ name: this.state.inputValue });
     localStorage.setItem(NAME_LS, this.state.inputValue);
   }
 
   handleChange(e) {
-    this.setState({inputValue: e.target.value});
+    this.setState({ inputValue: e.target.value });
   }
 
   componentWillMount() {
@@ -72,20 +73,20 @@ class MiCasa extends Component {
     //   }
     // );
     this.updateWeather();
-    Modal.setAppElement('body');
+    Modal.setAppElement("body");
   }
 
   componentDidMount() {
     const name = localStorage.getItem(NAME_LS);
     if (name) {
-      this.setState({name});
+      this.setState({ name });
     } else {
-      this.setState({modalIsOpen: true});
+      this.setState({ modalIsOpen: true });
     }
 
-    fetch('https://horizonshq.herokuapp.com/api/inspirationalquotes')
+    fetch("https://horizonshq.herokuapp.com/api/inspirationalquotes")
       .then(resp => resp.json())
-      .then(resp => this.setState({quote: resp.message}));
+      .then(resp => this.setState({ quote: resp.message }));
 
     setInterval(() => {
       var time = DateTime.local();
@@ -98,30 +99,30 @@ class MiCasa extends Component {
 
   determineSalutation(hour) {
     if (hour > 11 && hour < 19) {
-      return 'afternoon';
+      return "afternoon";
     } else if (hour > 18) {
-      return 'evening';
+      return "evening";
     } else {
-      return 'morning';
+      return "morning";
     }
   }
 
   determineWeatherCondition(str) {
     switch (str) {
-      case 'Rain':
-        return 'wi-day-rain';
-      case 'Thunderstorm':
-        return 'wi-day-thunderstorm';
-      case 'Drizzle':
-        return 'wi-day-showers';
-      case 'Extreme':
-        return 'wi-day-snow-thunderstorm';
-      case 'Snow':
-        return 'wi-day-snow';
-      case 'Clouds':
-        return 'wi-day-cloudy';
-      case 'Clear':
-        return 'wi-day-sunny';
+      case "Rain":
+        return "wi-day-rain";
+      case "Thunderstorm":
+        return "wi-day-thunderstorm";
+      case "Drizzle":
+        return "wi-day-showers";
+      case "Extreme":
+        return "wi-day-snow-thunderstorm";
+      case "Snow":
+        return "wi-day-snow";
+      case "Clouds":
+        return "wi-day-cloudy";
+      case "Clear":
+        return "wi-day-sunny";
       default:
         return null;
     }
@@ -155,13 +156,22 @@ class MiCasa extends Component {
     return DateTime.local();
   }
 
-  getBGStyle(category = 'VN') {
+  getCurrentDateString() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+
+    return dd + "-" + mm + "-" + yyyy;
+  }
+
+  getBGStyle(category = "VN") {
     return {
       backgroundImage: `url(https://source.unsplash.com/1600x900/daily?${category})`,
       // backgroundImage: `url(./img/bg.jpg)`,
-      backgroundSize: 'cover',
-      height: '100vh'
-    }
+      backgroundSize: "cover",
+      height: "100vh"
+    };
   }
 
   render() {
@@ -170,18 +180,24 @@ class MiCasa extends Component {
         <div className="bg-wrapper">
           <div className="text-right top-right weather">
             <div>
-              <i className={`wi ${this.state.weatherIcon}`} />&nbsp;<span id="weather" />
+              <i className={`wi ${this.state.weatherIcon}`} />
+              &nbsp;
+              <span id="weather" />
               {this.state.temperature}&#8451;
             </div>
             <h5 id="location">{this.state.location}</h5>
+            <div>{this.getCurrentDateString()}</div>
           </div>
           <div className="text-center centered">
             <div className="block-text">
               <h1 id="time">{this.state.time.toFormat("h':'mm")}</h1>
-              <h2 id="ampm">{this.state.time.toFormat('a')}</h2>
+              <h2 id="ampm">{this.state.time.toFormat("a")}</h2>
             </div>
+            <h5 className="text-white text-left">
+              Good {this.state.salutation}!
+            </h5>
             <h3 id="greetings">
-              Good {this.state.salutation}, {this.state.name}
+              {this.state.name}
             </h3>
             <Modal
               isOpen={this.state.modalIsOpen}
@@ -189,20 +205,19 @@ class MiCasa extends Component {
               contentLabel="name-modal"
             >
               <div>What's your name?</div>
-                <input name="name" type="text" onChange={this.handleChange}/>
-                <button onClick={this.closeModal}>
-                  Next
-                </button>
+              <input name="name" type="text" onChange={this.handleChange} />
+              <button onClick={this.closeModal}>Next</button>
             </Modal>
           </div>
-          <div className="text-center bottom-third quote">
-            <div id="quote-text">{this.state.quote}</div>
+          <div className="bottom-third quote">
+            {/* <div id="quote-text">{this.state.quote}</div> */}
+            <Quote />
           </div>
-          <div className="text-right bottom-right">
+          {/* <div className="text-right bottom-right">
             <div id="settings-text">
               <h6><i className="fa fa-cog"></i>Settings</h6>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
