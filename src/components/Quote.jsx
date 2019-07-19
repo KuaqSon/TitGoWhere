@@ -57,7 +57,7 @@ class Quote extends Component {
     const { quoteText, author } = this.state;
     return (
       <div>
-        <div className="text-center">{quoteText}</div>
+        <div className="text-left">{quoteText}</div>
         <div className="text-right">{author}</div>
       </div>
     );
