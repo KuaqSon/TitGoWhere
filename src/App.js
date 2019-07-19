@@ -55,21 +55,23 @@ class MiCasa extends Component {
   }
 
   componentWillMount() {
-    navigator.geolocation.getCurrentPosition(
-      position =>
-        this.setState(
-          {
-            geolocation: {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            }
-          },
-          () => this.updateWeather()
-        ),
-      () => {
-        throw 'Error occured!';
-      }
-    );
+    // navigator.geolocation.getCurrentPosition(
+    //   position =>
+    //     this.setState(
+    //       {
+    //         geolocation: {
+    //           latitude: position.coords.latitude,
+    //           longitude: position.coords.longitude
+    //         }
+    //       },
+    //       () => this.updateWeather()
+    //     ),
+    //   (e) => {
+    //     console.log(e);
+    //     throw 'Error occured!';
+    //   }
+    // );
+    this.updateWeather();
     Modal.setAppElement('body');
   }
 
@@ -126,12 +128,17 @@ class MiCasa extends Component {
   }
 
   updateWeather() {
+    // fetch(
+    //   `http://api.openweathermap.org/data/2.5/weather?APPID=${
+    //     this.state.weatherAPIKey
+    //   }&lat=${this.state.geolocation.latitude}&lon=${
+    //     this.state.geolocation.longitude
+    //   }`
+    // )
     fetch(
       `http://api.openweathermap.org/data/2.5/weather?APPID=${
         this.state.weatherAPIKey
-      }&lat=${this.state.geolocation.latitude}&lon=${
-        this.state.geolocation.longitude
-      }`
+      }&lat=10.762622&lon=106.660172`
     )
       .then(resp => resp.json())
       .then(resp =>
@@ -140,17 +147,18 @@ class MiCasa extends Component {
           temperature: Math.round(resp.main.temp - 273.15),
           weatherIcon: this.determineWeatherCondition(resp.weather[0].main)
         })
-      );
+      )
+      .catch(e => console.log(e));
   }
 
   getTime() {
     return DateTime.local();
   }
 
-  getBGStyle(category = 'HK') {
+  getBGStyle(category = 'VN') {
     return {
-      // backgroundImage: `url(https://source.unsplash.com/2560x1600/daily?${category})`,
-      backgroundImage: `url(./img/bg.jpg)`,
+      backgroundImage: `url(https://source.unsplash.com/1600x900/daily?${category})`,
+      // backgroundImage: `url(./img/bg.jpg)`,
       backgroundSize: 'cover',
       height: '100vh'
     }
@@ -192,7 +200,7 @@ class MiCasa extends Component {
           </div>
           <div className="text-right bottom-right">
             <div id="settings-text">
-              <h6><i class="fa fa-cog"></i>Settings</h6>
+              <h6><i className="fa fa-cog"></i>Settings</h6>
             </div>
           </div>
         </div>
