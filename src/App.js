@@ -167,8 +167,9 @@ class MiCasa extends Component {
 
   getBGStyle(category = "VN") {
     return {
-      backgroundImage: `url(https://source.unsplash.com/1600x900/daily?${category})`,
+      // backgroundImage: `url(https://source.unsplash.com/1600x900/daily?${category})`,
       // backgroundImage: `url(./img/bg.jpg)`,
+      backgroundImage: "url(https://source.unsplash.com/1600x900/daily)",
       backgroundSize: "cover",
       height: "100vh",
       backgroundColor: "#2f4f4f"
@@ -214,11 +215,12 @@ class MiCasa extends Component {
             {/* <div id="quote-text">{this.state.quote}</div> */}
             <Quote />
           </div>
-          {/* <div className="text-right bottom-right">
+          <div className="text-right bottom-right">
             <div id="settings-text">
-              <h6><i className="fa fa-cog"></i>Settings</h6>
+              {/* <h6><i className="fa fa-cog"></i>Settings</h6> */}
+              <div><i className="fa fa-exclamation-circle"></i>Made by: Quang Son Nguyen</div>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     );

@@ -87,7 +87,8 @@ h2 {
 #settings-text {
   /* font-family: "Helvetica Neue"; */
   color: white;
-  font-size: 2.5vw;
+  /* font-size: 2.5vw; */
+  font-size: 10px;
   letter-spacing: 1px;
   line-height: 1;
   margin: 0;
