@@ -169,7 +169,8 @@ class MiCasa extends Component {
     return {
       // backgroundImage: `url(https://source.unsplash.com/1600x900/daily?${category})`,
       // backgroundImage: `url(./img/bg.jpg)`,
-      backgroundImage: "url(https://source.unsplash.com/1600x900/daily)",
+      // backgroundImage: "url(https://source.unsplash.com/1600x900/daily)",
+      backgroundImage: "url(https://picsum.photos/1600/900)",
       backgroundSize: "cover",
       height: "100vh",
       backgroundColor: "#2f4f4f"
