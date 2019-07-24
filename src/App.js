@@ -1,21 +1,10 @@
 import React, { Component } from "react";
 import { DateTime } from "luxon";
-import Modal from "react-modal";
 import Quote from "./components/Quote";
+import FillName from "./components/FillName";
 import "./App.css";
 
 const NAME_LS = "NAME_LS";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
-};
 
 class MiCasa extends Component {
   constructor() {
@@ -38,6 +27,7 @@ class MiCasa extends Component {
       weatherAPIKey: "594d083c4f45203a1d8cf6c1f7dd0a0b",
       weatherIcon: null,
       modalIsOpen: false,
+      nameEmpty: false,
       inputValue: ""
     };
 
@@ -69,11 +59,9 @@ class MiCasa extends Component {
     //     ),
     //   (e) => {
     //     console.log(e);
-    //     throw 'Error occured!';
     //   }
     // );
     this.updateWeather();
-    Modal.setAppElement("body");
   }
 
   componentDidMount() {
@@ -81,7 +69,7 @@ class MiCasa extends Component {
     if (name) {
       this.setState({ name });
     } else {
-      this.setState({ modalIsOpen: true });
+      this.setState({ nameEmpty: true });
     }
 
     setInterval(() => {
@@ -174,50 +162,47 @@ class MiCasa extends Component {
   }
 
   render() {
+    const { nameEmpty } = this.state;
+
     return (
       <div style={this.getBGStyle(this.state.category)}>
         <div className="bg-wrapper">
-          <div className="text-right top-right weather">
+          {nameEmpty && <FillName />}
+          {!nameEmpty && (
             <div>
-              <i className={`wi ${this.state.weatherIcon}`} />
-              &nbsp;
-              <span id="weather" />
-              {this.state.temperature}&#8451;
+              <div className="text-right top-right weather">
+                <div>
+                  <i className={`wi ${this.state.weatherIcon}`} />
+                  &nbsp;
+                  <span id="weather" />
+                  {this.state.temperature}&#8451;
+                </div>
+                <h5 id="location">{this.state.location}</h5>
+                <div>{this.getCurrentDateString()}</div>
+              </div>
+              <div className="text-center centered">
+                <div className="block-text">
+                  <h1 id="time">{this.state.time.toFormat("h':'mm")}</h1>
+                  <h2 id="ampm">{this.state.time.toFormat("a")}</h2>
+                </div>
+                <h5 className="text-white text-left">
+                  Good {this.state.salutation}!
+                </h5>
+                <h3 id="greetings">{this.state.name}</h3>
+              </div>
+              <div className="bottom-third quote">
+                <Quote />
+              </div>
+              <div className="text-right bottom-right">
+                <div id="settings-text">
+                  <div>
+                    <i className="fa fa-exclamation-circle" />
+                    Made by: Quang Son Nguyen
+                  </div>
+                </div>
+              </div>
             </div>
-            <h5 id="location">{this.state.location}</h5>
-            <div>{this.getCurrentDateString()}</div>
-          </div>
-          <div className="text-center centered">
-            <div className="block-text">
-              <h1 id="time">{this.state.time.toFormat("h':'mm")}</h1>
-              <h2 id="ampm">{this.state.time.toFormat("a")}</h2>
-            </div>
-            <h5 className="text-white text-left">
-              Good {this.state.salutation}!
-            </h5>
-            <h3 id="greetings">
-              {this.state.name}
-            </h3>
-            <Modal
-              isOpen={this.state.modalIsOpen}
-              style={customStyles}
-              contentLabel="name-modal"
-            >
-              <div>What's your name?</div>
-              <input name="name" type="text" onChange={this.handleChange} />
-              <button onClick={this.closeModal}>Next</button>
-            </Modal>
-          </div>
-          <div className="bottom-third quote">
-            {/* <div id="quote-text">{this.state.quote}</div> */}
-            <Quote />
-          </div>
-          <div className="text-right bottom-right">
-            <div id="settings-text">
-              {/* <h6><i className="fa fa-cog"></i>Settings</h6> */}
-              <div><i className="fa fa-exclamation-circle"></i>Made by: Quang Son Nguyen</div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     );
