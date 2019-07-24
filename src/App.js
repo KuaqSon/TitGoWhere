@@ -84,10 +84,6 @@ class MiCasa extends Component {
       this.setState({ modalIsOpen: true });
     }
 
-    fetch("https://horizonshq.herokuapp.com/api/inspirationalquotes")
-      .then(resp => resp.json())
-      .then(resp => this.setState({ quote: resp.message }));
-
     setInterval(() => {
       var time = DateTime.local();
       this.setState({
