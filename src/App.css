@@ -84,6 +84,12 @@ h2 {
   right: 2vh;
 }
 
+.bottom-left {
+  position: fixed;
+  bottom: 2vh;
+  left: 2vh;
+}
+
 #settings-text {
   /* font-family: "Helvetica Neue"; */
   color: white;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { DateTime } from "luxon";
 import Quote from "./components/Quote";
+import Setting from "./components/Setting";
 import FillName from "./components/FillName";
 import "./App.css";
 
@@ -150,11 +151,13 @@ class TitGoWhere extends Component {
   }
 
   getBGStyle(category = "VN") {
+    const backgroundUrl = localStorage.img || "https://picsum.photos/1600/900";
     return {
       // backgroundImage: `url(https://source.unsplash.com/1600x900/daily?${category})`,
       // backgroundImage: `url(./img/bg.jpg)`,
       // backgroundImage: "url(https://source.unsplash.com/1600x900/daily)",
-      backgroundImage: "url(https://picsum.photos/1600/900)",
+      // backgroundImage: "url(https://picsum.photos/1600/900)",
+      backgroundImage: `url(${backgroundUrl})`,
       backgroundSize: "cover",
       height: "100vh",
       backgroundColor: "#2f4f4f"
@@ -193,6 +196,7 @@ class TitGoWhere extends Component {
               <div className="bottom-third quote">
                 <Quote />
               </div>
+              <Setting />
               <div className="text-right bottom-right">
                 <div id="settings-text">
                   <div>
