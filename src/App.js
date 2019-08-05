@@ -6,7 +6,7 @@ import "./App.css";
 
 const NAME_LS = "NAME_LS";
 
-class MiCasa extends Component {
+class TitGoWhere extends Component {
   constructor() {
     super();
 
@@ -209,4 +209,4 @@ class MiCasa extends Component {
   }
 }
 
-export default MiCasa;
+export default TitGoWhere;
